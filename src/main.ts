@@ -33,7 +33,7 @@ async function bootstrap() {
       module.hot.dispose(() => app.close());
     }
 
-    console.log(`Listening on port ${port}!`);
+    console.log(`Listening on port ${port}`);
   } catch (error) {
     console.error('Error during bootstrap:', error);
   }
