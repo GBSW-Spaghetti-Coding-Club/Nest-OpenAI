@@ -8,7 +8,13 @@ const port = process.env.PORT || 3030;
 
 async function bootstrap() {
   try {
-    const app = await NestFactory.create(AppModule, { cors: true });
+    const app = await NestFactory.create(AppModule);
+    app.enableCors({
+      origin: 'http://localhost:3000', // 프론트엔드 주소
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      allowedHeaders: 'Content-Type, Accept',
+      credentials: true,
+    });
     app.setGlobalPrefix('/api');
 
     const config = new DocumentBuilder()
