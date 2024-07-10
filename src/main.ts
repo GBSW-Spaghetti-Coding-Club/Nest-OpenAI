@@ -10,7 +10,7 @@ async function bootstrap() {
   try {
     const app = await NestFactory.create(AppModule);
     app.enableCors({
-      origin: 'http://localhost:3000', // 프론트엔드 주소
+      origin: 'http://sphagetti-front.s3-website.ap-northeast-2.amazonaws.com', // 프론트엔드 주소
       methods: ['GET', 'POST', 'PUT', 'DELETE'],
       allowedHeaders: 'Content-Type, Accept',
       credentials: true,
