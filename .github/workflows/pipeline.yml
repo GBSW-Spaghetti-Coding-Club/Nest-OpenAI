@@ -13,9 +13,14 @@ jobs:
     steps:
       - name: Pull Docker image
         run: sudo docker pull jinseung0327/ai-nest:latest
+
       - name: Delete Old docker container
         run: sudo docker rm -f ai-nest || true
+
       - name: Run Docker Container
         env:
           OPENAI_API_KEY: ${{secrets.OPENAI_API_KEY}}
-        run: sudo docker run -d -p 3030:3030 --name ai-nest -e $OPENAI_API_KEY jinseung0327/ai-nest
+        run: |
+          sudo docker run -d -p 3030:3030 --name ai-nest \
+          -e OPENAI_API_KEY="${OPENAI_API_KEY}" \
+          jinseung0327/ai-nest
