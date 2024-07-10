@@ -11,7 +11,7 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     app.enableCors({
       origin: '*',
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      methods: ['GET'],
       allowedHeaders: 'Content-Type, Accept',
       credentials: true,
     });
@@ -33,7 +33,7 @@ async function bootstrap() {
       module.hot.dispose(() => app.close());
     }
 
-    console.log(`Listening on port ${port}`);
+    console.log(`Listening on port ${port}!`);
   } catch (error) {
     console.error('Error during bootstrap:', error);
   }
