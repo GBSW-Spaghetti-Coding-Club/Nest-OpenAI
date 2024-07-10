@@ -9,12 +9,18 @@ const port = process.env.PORT || 3030;
 async function bootstrap() {
   try {
     const app = await NestFactory.create(AppModule);
+
+    // CORS 설정 수정
     app.enableCors({
-      origin: '*',
-      methods: ['GET'],
-      allowedHeaders: 'Content-Type, Accept',
+      origin: [
+        'http://sphagetti-front.s3-website.ap-northeast-2.amazonaws.com',
+        'http://localhost:3000' // 로컬 개발 환경을 위해 추가
+      ],
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+      allowedHeaders: 'Content-Type, Accept, Authorization',
       credentials: true,
     });
+
     app.setGlobalPrefix('/api');
 
     const config = new DocumentBuilder()
@@ -33,9 +39,11 @@ async function bootstrap() {
       module.hot.dispose(() => app.close());
     }
 
-    console.log(`Listening on port ${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Swagger documentation is available at http://localhost:${port}/api-docs`);
   } catch (error) {
     console.error('Error during bootstrap:', error);
   }
 }
+
 bootstrap();
