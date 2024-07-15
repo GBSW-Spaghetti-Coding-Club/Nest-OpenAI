@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import OpenAI from 'openai';
 import { ConfigService } from '@nestjs/config';
 import { ImageGenerationDto } from './dto/image-generation.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { drawImgDto } from './dto/draw-image.dto';
 
 @Injectable()
 export class GptService {
@@ -30,4 +32,23 @@ export class GptService {
       throw error;
     }
   }
+
+  async drawPainting(draw: drawImgDto): Promise<string> {
+    try{
+      const prompt = `${draw.nature} 그려줘`
+
+      const response = await this.openai.images.generate({
+        model: 'dall-e-3',
+        prompt: prompt,
+        n: 1,
+        size: '1024x1024',
+      });
+
+      return response.data[0].url;
+    } catch(error){
+      console.error('Error draw Paint:', error);
+      throw error;
+    }
+  }
+  
 }

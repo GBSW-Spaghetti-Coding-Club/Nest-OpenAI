@@ -34,4 +34,4 @@ export class HealthController {
   dummy() {
     return this.healthService.dummy();
   }
-}
+} 
